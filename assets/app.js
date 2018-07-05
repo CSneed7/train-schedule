@@ -6,32 +6,31 @@ $(document).ready(function(){
 	$("#addTrainBtn").on("click", function(){
 
 		
-		var trainName = $("#trainNameInput").val().trim();
-		var destination = $("#destinationInput").val().trim();
-		var trainTimeInput = moment($("#trainTimeInput").val().trim(), "HH:mm").subtract(10, "years").format("X");;
-		var frequencyInput = $("#frequencyInput").val().trim();
+		var trainName = $("#trainName").val().trim();
+		var destination = $("#destination").val().trim();
+		var trainTime = moment($("#trainTime").val().trim(), "HH:mm").subtract(10, "years").format("X");;
+		var frequency = $("#frequency").val().trim();
 
 		
 		console.log(trainName);
 		console.log(destination);
-		console.log(trainTimeInput);
-		console.log(frequencyInput);
+		console.log(trainTime);
+		console.log(frequency);
 
 		var newTrain = {
 			name:  trainName,
 			destination: destination,
-			trainTime: trainTimeInput,
-			frequency: frequencyInput,
+			trainTime: trainTime,
+			frequency: frequency,
 		}
 
 		
 		trainData.push(newTrain);
 
-		$("#trainNameInput").val("");
-		$("#lineInput").val("");
-		$("#destinationInput").val("");
-		$("#trainInput").val("");
-		$("#frequencyInput").val("");
+		$("#trainName").val("");
+		$("#destination").val("");
+		$("#train").val("");
+		$("#frequency").val("");
 
 		return false;
 	});
@@ -42,11 +41,11 @@ $(document).ready(function(){
 
 		var firebaseName = childSnapshot.val().name;
 		var firebaseDestination = childSnapshot.val().destination;
-		var firebaseTrainTimeInput = childSnapshot.val().trainTime;
+		var firebaseTrainTime = childSnapshot.val().trainTime;
 		var firebaseFrequency = childSnapshot.val().frequency;
 		
-		var diffTime = moment().diff(moment.unix(firebaseTrainTimeInput), "minutes");
-		var timeRemainder = moment().diff(moment.unix(firebaseTrainTimeInput), "minutes") % firebaseFrequency ;
+		var diffTime = moment().diff(moment.unix(firebaseTrainTime), "minutes");
+		var timeRemainder = moment().diff(moment.unix(firebaseTrainTime), "minutes") % firebaseFrequency ;
 		var minutes = firebaseFrequency - timeRemainder;
 
 		var nextTrainArrival = moment().add(minutes, "m").format("hh:mm A"); 
